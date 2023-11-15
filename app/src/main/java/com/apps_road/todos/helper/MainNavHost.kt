@@ -8,11 +8,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.apps_road.todos.screens_ui.main_item.CreateMainItemScreen
-import com.apps_road.todos.screens_ui.dummyScreen
-import com.apps_road.todos.screens_ui.main_item.CameraDemo
+import com.apps_road.todos.screens_ui.item_detail.ItemDetailScreen
+import com.apps_road.todos.screens_ui.main_list.MainListScreen
 
 @Composable
-fun mainNavHost(
+fun MainNavHost(
     navController: NavHostController,
     modifier: Modifier,
     iPadding: PaddingValues?,
@@ -20,14 +20,17 @@ fun mainNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = ScreensRoutes.CreateMainItemScreen.route,
+        startDestination = ScreensRoutes.MainListScreen.route,
         modifier = if (iPadding != null) modifier.padding(iPadding) else modifier
     ) {
         composable(ScreensRoutes.CreateMainItemScreen.route) {
             CreateMainItemScreen(modifier, navController, onItemClicked)
         }
-        composable(ScreensRoutes.DUMMY_SCREEN.route) {
-            dummyScreen(modifier, navController)
+        composable(ScreensRoutes.ItemDetailScreen.route) {
+            ItemDetailScreen(modifier, navController)
+        }
+        composable(ScreensRoutes.MainListScreen.route) {
+            MainListScreen(modifier, navController)
         }
     }
 }

@@ -1,23 +1,16 @@
 package com.apps_road.todos.screens_ui.main_item
 
-import android.Manifest
-import android.app.Activity
 import android.content.ContentResolver
 import android.content.ContentValues
-import android.content.Context
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,9 +29,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,26 +42,20 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.apps_road.todos.BuildConfig
 import com.apps_road.todos.R
 import com.apps_road.todos.R.drawable.ic_image_placeholder
-import com.apps_road.todos.helper.createImageFile
 import com.apps_road.todos.model.data.MainItemData
-import com.apps_road.todos.ui.theme.TodosTheme
 import com.apps_road.todos.view_model.MainItemViewModel
-import com.google.common.util.concurrent.ListenableFuture
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+enum class CameraPermissionStatus { NoPermission, PermissionGranted, PermissionDenied }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,6 +64,7 @@ fun CreateMainItemScreen(
     navHostController: NavHostController,
     onItemClicked: () -> Unit?
 ) {
+    Log.d("my app data", "asdokfjnasodfn a ")
     val mainItemViewModel: MainItemViewModel = hiltViewModel()
     val resolver = LocalContext.current.contentResolver
 
@@ -112,10 +98,6 @@ fun CreateMainItemScreen(
 
     val hasPhoto by remember {
         hasPhotoState
-    }
-
-    var shouldShowFullImage by remember {
-        mutableStateOf(false)
     }
 
     var isClicked by remember {
@@ -238,7 +220,7 @@ fun CreateMainItemScreen(
                     )
                     val isBackStacked: Boolean = navHostController.popBackStack()
                     if (!isBackStacked) {
-                        onItemClicked
+                        onItemClicked.invoke()
                     }
                 }
             },
@@ -308,12 +290,4 @@ private fun getImageRotation(resolver: ContentResolver, uri: Uri): Int {
     }
     println("Rotation = $result")
     return result
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun previewMainItem() {
-    TodosTheme {
-        CreateMainItemScreen(Modifier, rememberNavController(), {})
-    }
 }
