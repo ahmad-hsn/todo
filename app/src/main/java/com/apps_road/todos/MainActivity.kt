@@ -26,6 +26,7 @@ import com.apps_road.todos.components.topBar
 import com.apps_road.todos.helper.ClickedItemType
 import com.apps_road.todos.helper.MainNavHost
 import com.apps_road.todos.helper.ScreensRoutes
+import com.apps_road.todos.model.data.MainItemData
 import com.apps_road.todos.ui.theme.TodosTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,7 +56,6 @@ fun MainView() {
     val navBackStackEntry by navHostController.currentBackStackEntryAsState()
     val topBarState = rememberSaveable { (mutableStateOf(true)) }
     var isClicked by remember { mutableStateOf(false) }
-    val nevigateToItemDetail by remember { mutableStateOf(false) }
 
     val modifier = Modifier
 
@@ -100,9 +100,20 @@ fun onItemClicked(clickType: ClickedItemType, item: Any?, navHostController: Nav
         }
 
         ClickedItemType.MAIN_LIST_SCREEN -> {
-            navHostController?.navigate(ScreensRoutes.ItemDetailScreen.route)
+            val parsedItem = item as MainItemData
+//            val gson: Gson = GsonBuilder().create()
+//            val itemJson = gson.toJson(parsedItem)
+            navHostController?.currentBackStackEntry?.arguments?.putParcelable("item", parsedItem)
+            navHostController?.navigate(
+                ScreensRoutes.ItemDetailScreen.route
+            )
+//            navHostController?.navigate(
+//                ScreensRoutes.ItemDetailScreen.route
+//                    .replace(
+//                        oldValue = "{item}",
+//                        newValue = itemJson.toString()
+//                    )
+//            )
         }
-
-        else -> {}
     }
 }

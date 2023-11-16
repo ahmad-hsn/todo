@@ -9,7 +9,7 @@ sealed class ScreensRoutes(val route: String) {
 
 enum class Screens(val route: String) {
     MAIN_ITEM("main_item"),
-    ITEM_DETAIL("item_detail"),
+    ITEM_DETAIL("item_detail/{item}"),
     MAIN_LIST("main_list"),
     DUMMY_SCREEN("dummy_screen")
 }

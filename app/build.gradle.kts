@@ -3,6 +3,7 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -52,7 +53,7 @@ android {
     }
     kapt {
         arguments {
-            arg("room.schemaLocation", "$projectDir/schemas".toString())
+            arg("room.schemaLocation", "$projectDir/schemas")
         }
     }
 }
@@ -84,7 +85,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     //Hilt Dependency
-    implementation("com.google.dagger:hilt-android:2.44")
+    implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
@@ -108,6 +109,9 @@ dependencies {
     implementation("androidx.camera:camera-camera2:1.4.0-alpha02")
     implementation("androidx.camera:camera-lifecycle:1.4.0-alpha02")
     implementation("androidx.camera:camera-view:1.3.0")
+
+    //GSON
+    implementation("com.google.code.gson:gson:2.10.1")
 
 
     testImplementation("junit:junit:4.13.2")
