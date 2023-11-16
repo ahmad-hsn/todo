@@ -19,9 +19,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.apps_road.todos.components.topBar
+import com.apps_road.todos.helper.ClickedItemType
 import com.apps_road.todos.helper.MainNavHost
 import com.apps_road.todos.helper.ScreensRoutes
 import com.apps_road.todos.ui.theme.TodosTheme
@@ -82,18 +84,25 @@ fun MainView() {
             navController = navHostController,
             Modifier,
             innerPadding,
-            ::onBackItemClicked
+            ::onItemClicked
         )
-//        if (isClicked) {
-//            navHostController.navigate(ScreensRoutes.CreateMainItemScreen.route)
-//        }
 
-        if(nevigateToItemDetail) {
-            navHostController.navigate(ScreensRoutes.ItemDetailScreen.route)
-        }
+//        if(nevigateToItemDetail) {
+//            navHostController.navigate(ScreensRoutes.ItemDetailScreen.route)
+//        }
     }
 }
 
-fun onBackItemClicked() {
+fun onItemClicked(clickType: ClickedItemType, item: Any?, navHostController: NavHostController?) {
+    when(clickType) {
+        ClickedItemType.MAIN_ITEM_SCREEN -> {
 
+        }
+
+        ClickedItemType.MAIN_LIST_SCREEN -> {
+            navHostController?.navigate(ScreensRoutes.ItemDetailScreen.route)
+        }
+
+        else -> {}
+    }
 }

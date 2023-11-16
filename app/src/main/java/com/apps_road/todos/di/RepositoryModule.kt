@@ -1,7 +1,9 @@
 package com.apps_road.todos.di
 
+import com.apps_road.todos.model.repository.ItemDetailRepository
 import com.apps_road.todos.model.repository.MainActivityRepository
 import com.apps_road.todos.model.repository.MainItemRepository
+import com.apps_road.todos.model.service.ItemDetailService
 import com.apps_road.todos.model.service.MainItemService
 import dagger.Component
 import dagger.Module
@@ -28,5 +30,13 @@ class RepositoryModule {
         mainItemService: MainItemService
     ): MainActivityRepository {
         return MainActivityRepository(mainItemService)
+    }
+
+    @Provides
+    @Singleton
+    fun  provideItemDetailRespository(
+        itemDetailService: ItemDetailService
+    ): ItemDetailRepository {
+        return ItemDetailRepository(itemDetailService)
     }
 }

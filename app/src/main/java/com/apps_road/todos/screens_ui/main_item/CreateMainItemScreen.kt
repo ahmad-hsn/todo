@@ -49,6 +49,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.apps_road.todos.R
 import com.apps_road.todos.R.drawable.ic_image_placeholder
+import com.apps_road.todos.helper.ClickedItemType
 import com.apps_road.todos.model.data.MainItemData
 import com.apps_road.todos.view_model.MainItemViewModel
 import java.text.SimpleDateFormat
@@ -62,9 +63,8 @@ enum class CameraPermissionStatus { NoPermission, PermissionGranted, PermissionD
 fun CreateMainItemScreen(
     modifier: Modifier,
     navHostController: NavHostController,
-    onItemClicked: () -> Unit?
+    onItemClicked: (ClickedItemType, Any?, NavHostController) -> Unit?
 ) {
-    Log.d("my app data", "asdokfjnasodfn a ")
     val mainItemViewModel: MainItemViewModel = hiltViewModel()
     val resolver = LocalContext.current.contentResolver
 
@@ -220,7 +220,7 @@ fun CreateMainItemScreen(
                     )
                     val isBackStacked: Boolean = navHostController.popBackStack()
                     if (!isBackStacked) {
-                        onItemClicked.invoke()
+                        onItemClicked.invoke(ClickedItemType.MAIN_ITEM_SCREEN,null, navHostController)
                     }
                 }
             },

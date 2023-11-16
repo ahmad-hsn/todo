@@ -11,12 +11,17 @@ import com.apps_road.todos.screens_ui.main_item.CreateMainItemScreen
 import com.apps_road.todos.screens_ui.item_detail.ItemDetailScreen
 import com.apps_road.todos.screens_ui.main_list.MainListScreen
 
+enum class ClickedItemType {
+    MAIN_ITEM_SCREEN,
+    MAIN_LIST_SCREEN,
+}
+
 @Composable
 fun MainNavHost(
     navController: NavHostController,
     modifier: Modifier,
     iPadding: PaddingValues?,
-    onItemClicked: () -> Unit?
+    onItemClicked: (ClickedItemType, Any?, NavHostController?) -> Unit?
 ) {
     NavHost(
         navController = navController,
@@ -30,7 +35,7 @@ fun MainNavHost(
             ItemDetailScreen(modifier, navController)
         }
         composable(ScreensRoutes.MainListScreen.route) {
-            MainListScreen(modifier, navController)
+            MainListScreen(modifier, navController, onItemClicked)
         }
     }
 }

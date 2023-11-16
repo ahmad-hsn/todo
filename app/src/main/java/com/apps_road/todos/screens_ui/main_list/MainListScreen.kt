@@ -1,5 +1,6 @@
 package com.apps_road.todos.screens_ui.main_list
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.apps_road.todos.R
 import com.apps_road.todos.components.MainListItem
+import com.apps_road.todos.helper.ClickedItemType
 import com.apps_road.todos.helper.ScreensRoutes
 import com.apps_road.todos.model.data.MainItemData
 import com.apps_road.todos.view_model.MainActivityViewModel
@@ -37,6 +39,7 @@ import kotlinx.coroutines.launch
 fun MainListScreen(
     modifier: Modifier,
     navHostController: NavHostController,
+    onItemClicked: (ClickedItemType, Any?, NavHostController) -> Unit?
 ) {
     val itemsList = remember { mutableStateListOf<MainItemData>() }
     val mainActivityViewModel: MainActivityViewModel = hiltViewModel()
@@ -71,7 +74,7 @@ fun MainListScreen(
         ) {
             items(itemsList) { item ->
                 MainListItem(item, modifier = modifier) {
-//                    nevigateToItemDetail = true
+                    onItemClicked.invoke(ClickedItemType.MAIN_LIST_SCREEN,item, navHostController)
                 }
             }
         }
@@ -87,7 +90,6 @@ fun MainListScreen(
                 },
             onClick = {
                 navHostController.navigate(ScreensRoutes.CreateMainItemScreen.route)
-//                    isClicked = true
             },
             containerColor = colorResource(id = R.color.teal_700), shape = CircleShape
         ) {

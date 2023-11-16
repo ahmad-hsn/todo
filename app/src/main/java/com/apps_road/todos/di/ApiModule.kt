@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.apps_road.todos.db.TodoDatabase
 import com.apps_road.todos.db.TodoDatabase.Companion.MIGRATION_1_2
+import com.apps_road.todos.model.service.ItemDetailService
 import com.apps_road.todos.model.service.MainItemService
 import dagger.Module
 import dagger.Provides
@@ -30,5 +31,13 @@ class ApiModule(
         appDatabase: TodoDatabase
     ): MainItemService {
         return appDatabase.mainItemDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideItemDetailService(
+        appDatabase: TodoDatabase
+    ): ItemDetailService {
+        return appDatabase.itemDetailDao()
     }
 }
