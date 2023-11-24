@@ -31,3 +31,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+#DB schemas
+app/schemas/com.apps_road.todos.db.TodoDatabase/
